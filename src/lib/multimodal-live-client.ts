@@ -170,6 +170,9 @@ export class MultimodalLiveClient extends EventEmitter<MultimodalLiveClientEvent
       blob
     )) as LiveIncomingMessage;
     if (isToolCallMessage(response)) {
+      // @ts-ignore
+      const messageId = response.toolCall?.id || response.toolCall?.toolCallId || 'N/A';
+      console.log('MultimodalLiveClient: Emitting toolcall event. Message ID:', messageId, 'Timestamp:', Date.now(), 'Full Response:', JSON.stringify(response));
       this.log("server.toolCall", response);
       this.emit("toolcall", response.toolCall);
       return;

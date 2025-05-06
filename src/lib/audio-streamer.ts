@@ -132,16 +132,35 @@ export class AudioStreamer {
       const audioBuffer = this.createAudioBuffer(audioData);
       const source = this.context.createBufferSource();
 
+      // Generic onended handler for all sources to ensure disconnection
+      source.onended = () => {
+        console.log(
+          "AudioStreamer: AudioBufferSourceNode finished playing, disconnecting.",
+        );
+        source.disconnect();
+      };
+
       if (this.audioQueue.length === 0) {
         if (this.endOfQueueAudioSource) {
+          // Clear any previous specific onended handler for the old endOfQueueAudioSource.
+          // The original code sets it to null. If we had a generic handler on it,
+          // this 'null' assignment would remove it.
           this.endOfQueueAudioSource.onended = null;
         }
         this.endOfQueueAudioSource = source;
+        // Specific onended handler for the source that is currently the last in the queue.
+        // This overwrites the generic one set a few lines above for this specific 'source' instance.
         source.onended = () => {
+          console.log(
+            "AudioStreamer: End-of-queue AudioBufferSourceNode finished playing, disconnecting.",
+          );
+          source.disconnect(); // Ensure disconnect is also called here.
           if (
             !this.audioQueue.length &&
-            this.endOfQueueAudioSource === source
+            this.endOfQueueAudioSource === source // Check if it's still the designated end source
           ) {
+            // Additional log to confirm onComplete trigger condition
+            console.log("AudioStreamer: Queue empty and this is the designated end source. Calling onComplete.");
             this.endOfQueueAudioSource = null;
             this.onComplete();
           }

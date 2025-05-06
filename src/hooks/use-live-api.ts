@@ -104,7 +104,8 @@ export function useLiveAPI({
     setConnected(false);
   }, [setConnected, client]);
 
-  return {
+  // Memoize the returned context value
+  const contextValue = useMemo(() => ({
     client,
     config,
     setConfig,
@@ -112,5 +113,7 @@ export function useLiveAPI({
     connect,
     disconnect,
     volume,
-  };
+  }), [client, config, setConfig, connected, connect, disconnect]);
+
+  return contextValue;
 }
