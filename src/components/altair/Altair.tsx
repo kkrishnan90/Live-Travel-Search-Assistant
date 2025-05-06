@@ -147,7 +147,6 @@ function AltairComponent() {
   // Handle incoming tool calls from Gemini
   useEffect(() => {
     const onToolCall = async (toolCall: ToolCall) => {
-      console.log('AltairComponent: onToolCall invoked. Timestamp:', Date.now(), 'ToolCall:', JSON.stringify(toolCall));
       console.log(`Received tool call:`, toolCall); // Existing log, kept for comparison
 
       // Find the specific function call for Discovery Engine search
@@ -280,7 +279,6 @@ function AltairComponent() {
     }
 
     if (hotelResults && measurementClientRef.current) {
-      console.log("Measurement Scheduler: New hotelResults detected. Scheduling measurements.");
       itemsToMeasureRef.current = [...hotelResults]; // Copy to avoid issues if hotelResults changes during async processing
       measuredHeightsRef.current = {}; // Reset for new results
       currentMeasureIndexRef.current = 0;
@@ -300,7 +298,6 @@ function AltairComponent() {
       const measureChunk = () => {
         if (!measurementNode || currentMeasureIndexRef.current >= itemsToMeasureRef.current.length) {
           if (currentMeasureIndexRef.current >= itemsToMeasureRef.current.length) {
-            console.log("Measurement Worker: All items measured.");
             // Ensure final itemHeightsRef has all measured heights
             itemHeightsRef.current = { ...measuredHeightsRef.current };
             if (listRef.current) {
@@ -373,7 +370,6 @@ function AltairComponent() {
             measurementRequestRef.current = requestAnimationFrame(measureChunk);
         } else {
             // All items processed, do a final update and reset
-            console.log("Measurement Worker: All items measured (finalizing).");
             itemHeightsRef.current = { ...measuredHeightsRef.current };
             if (listRef.current) {
                 listRef.current.resetAfterIndex(0, false);
@@ -389,7 +385,6 @@ function AltairComponent() {
         cancelAnimationFrame(measurementRequestRef.current);
         measurementRequestRef.current = null;
       }
-      console.log("Measurement Scheduler: hotelResults are null/empty, clearing heights.");
       itemHeightsRef.current = {};
       itemsToMeasureRef.current = [];
       measuredHeightsRef.current = {};

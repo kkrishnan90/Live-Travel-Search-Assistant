@@ -1,80 +1,101 @@
 .hotel-results-container {
+    width: 100%; /* Take full available width */
+    max-width: 1000px; /* Max width for larger screens */
     margin-top: 20px;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9; // Example background
-    padding-right: 0; // Remove padding-right if scrollbar is handled by List
+    margin-left: auto; /* Center the container */
+    margin-right: auto; /* Center the container */
+    padding: 20px; /* Increased padding for better spacing */
+    border: 1px solid #e0e0e0; /* Lighter border */
+    border-radius: 8px; /* Slightly more rounded corners */
+    background-color: #ffffff; /* Cleaner background */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Softer, modern shadow */
+    // padding-right: 0; // Keep or remove based on scrollbar behavior with VariableSizeList
 
     h3 {
-        margin-bottom: 15px;
-        color: #333; // Example color
+        margin-bottom: 20px; /* Increased margin */
+        color: #222; /* Darker, more modern text color */
+        font-size: 1.5em; /* Larger title */
+        text-align: center; /* Center title */
     }
 }
 
 /* New class for the item wrapper managed by react-window */
 .hotel-card-list-item {
     box-sizing: border-box;
-    /* Add padding here for spacing between cards, instead of margin on hotel-card itself */
-    padding-bottom: 10px; /* Added 10px space */
-    /* Ensure this padding is accounted for in react-window itemSize */
+    padding-bottom: 15px; /* Increased spacing between cards */
+    padding-left: 5px; /* Slight horizontal padding for alignment if container has none */
+    padding-right: 5px; /* Slight horizontal padding */
 }
 
 .hotel-card {
     display: flex;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 10px;
-    background-color: #fff; // Example background
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); // Example shadow
-    box-sizing: border-box; /* Added */
-    width: 100%; /* Ensure card takes full width of the list item */
+    align-items: flex-start; /* Align items to the top */
+    border: 1px solid #e0e0e0; /* Lighter border, consistent with container */
+    border-radius: 6px; /* Slightly more rounded */
+    padding: 15px; /* Increased padding inside card */
+    background-color: #ffffff;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.08); /* Softer, slightly larger shadow */
+    box-sizing: border-box;
+    width: 100%;
+    transition: box-shadow 0.3s ease-in-out; /* Add hover effect */
+
+    &:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.12); /* Enhanced shadow on hover */
+    }
 
     .hotel-image {
-        width: 100px; // Adjust size as needed
-        height: 100px;
+        width: 120px; /* Slightly larger image */
+        height: 120px;
         object-fit: cover;
-        margin-right: 15px;
-        border-radius: 4px;
+        margin-right: 20px; /* Increased margin */
+        border-radius: 6px; /* Consistent border-radius */
+        flex-shrink: 0; /* Prevent image from shrinking */
     }
 
     .hotel-info {
         flex-grow: 1;
+        display: flex;
+        flex-direction: column; /* Stack info vertically */
 
         h4 {
             margin-top: 0;
-            margin-bottom: 5px;
-            color: #0056b3; // Example color
+            margin-bottom: 8px; /* More space below title */
+            color: #333; /* Darker, more readable title */
+            font-size: 1.15em; /* Slightly larger title */
+            font-weight: 600; /* Bolder title */
         }
 
         .hotel-rating {
             font-size: 0.9em;
-            color: #666;
-            margin: 5px 0;
+            color: #555; /* Slightly darker for better contrast */
+            margin-bottom: 10px; /* More space */
         }
 
         .amenities-tags {
-            margin-top: 8px;
-            margin-bottom: 8px;
+            margin-top: 0; /* Adjusted from 8px */
+            margin-bottom: 12px; /* More space */
+            display: flex; /* Allow wrapping */
+            flex-wrap: wrap;
+            gap: 6px; /* Spacing between tags */
         }
 
         .amenity-tag {
             display: inline-block;
-            background-color: #eee;
-            color: #555;
-            padding: 2px 6px;
-            margin-right: 5px;
-            margin-bottom: 5px;
-            border-radius: 4px;
-            font-size: 0.8em;
+            background-color: #f0f0f0; /* Lighter, cleaner tag background */
+            color: #444; /* Darker tag text */
+            padding: 4px 8px; /* More padding in tags */
+            border-radius: 12px; /* Pill-shaped tags */
+            font-size: 0.75em; /* Slightly smaller for refinement */
+            line-height: 1.4;
         }
 
         .hotel-price {
             font-weight: bold;
-            color: orange;
-            font-size: 1.1em;
-            margin-top: 10px;
-            // text-align: right; // Optional: align price to the right
+            color: #e67e22; /* A more modern orange/brown */
+            font-size: 1.2em; /* Larger price */
+            margin-top: auto; /* Push price to the bottom if card height varies */
+            padding-top: 10px; /* Space above price if it's at bottom */
+            align-self: flex-end; /* Align price to the right of its flex container */
         }
         /* Removed generic p, ul, li styles as they are replaced or no longer needed */
     }
